@@ -1,0 +1,20 @@
+.navbar{
+    background-color: rgb(65, 105, 117);
+    
+}
+.navbar-brand {
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-left: 40%;
+    font-size: 30px;
+
+}
+.form-control{
+    border: 1px solid gray !important;
+}
+.card-header{
+    font-weight: bolder;
+    color: black;
+    background-color: rgb(74, 143, 155);
+
+}

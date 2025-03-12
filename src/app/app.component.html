@@ -1,0 +1,101 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <span class="navbar-brand text-center mb-3">Employee Form</span>
+  </div>
+</nav><br>
+
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header">
+        <h4>Employee List</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>SrNo</th>
+                  <th>Name</th>
+                  <th>Contact No</th>
+                  <th>Email-Id</th>
+                  <th>City</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of employeeList; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.contactNo }}</td>
+                  <td>{{ item.emailId }}</td>
+                  <td>{{ item.city}}</td>
+
+
+                  <td class="text-center">
+                    <button class="btn btn-primary" (click)="onEdit(item)">Edit</button>
+                    <button class="btn btn-danger mx-2" (click)="onDelete(item.empId)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header">
+        New Employee
+      </div>
+      <div class="card-body">
+        <form [formGroup]="employeeForm">
+          <div class="row">
+            <div class="col-12">
+              <label for="">Name</label>
+              <input type="text" formControlName="name" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="">Email-Id</label>
+              <input type="text" formControlName="emailId" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="">Contact No</label>
+              <input type="text" formControlName="contactNo" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="">City</label>
+              <input type="text" formControlName="city" class="form-control">
+            </div>
+          
+            <div class="col-6">
+              <label for="">Pin Code</label>
+              <input type="text" formControlName="pincode" class="form-control">
+            </div>
+            <div class="col-12">
+              <label for="">Address</label>
+              <textarea formControlName="address" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-6 text-center">
+              <button class="btn btn-secondary" type="reset">Reset</button>
+            </div>
+            <div class="col-6 text-center">
+              <div *ngIf="!employeeForm.controls['empId'].value; else updateButton">
+                <button class="btn btn-primary" type="button" (click)="onSave()">Save Employee</button>
+              </div>
+              <ng-template #updateButton>
+                <button class="btn btn-warning" type="button" (click)="onUpdate()">Update Employee</button>
+              </ng-template>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
