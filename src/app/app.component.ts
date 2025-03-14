@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from './services/employee.service';
@@ -31,12 +31,12 @@ export class AppComponent implements OnInit {
   createForm() {
     this.employeeForm = new FormGroup({
       empId: new FormControl(null),
-      name: new FormControl(''),
-      city: new FormControl(''),
-      address: new FormControl(''),
-      contactNo: new FormControl(''),
-      emailId: new FormControl(''),
-      pincode: new FormControl('')
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      emailId: new FormControl('', [Validators.required, Validators.email]),
+      contactNo: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{11}$')]),
+      city: new FormControl('', Validators.required),
+      pincode: new FormControl('', [Validators.pattern('^[0-9]{5}$')]),
+      address: new FormControl('', [Validators.minLength(10)])
     });
   }
 
@@ -45,6 +45,8 @@ export class AppComponent implements OnInit {
       this.employeeService.addEmployee(this.employeeForm.value);
       this.loadEmployees();
       this.createForm();
+    } else {
+      this.employeeForm.markAllAsTouched();
     }
   }
 
@@ -54,11 +56,13 @@ export class AppComponent implements OnInit {
   }
 
   onUpdate() {
-    if (this.selectedEmployee) {
+    if (this.employeeForm.valid && this.selectedEmployee) {
       this.employeeService.updateEmployee(this.employeeForm.value);
       this.loadEmployees();
       this.selectedEmployee = null;
       this.createForm();
+    } else {
+      this.employeeForm.markAllAsTouched();
     }
   }
 
